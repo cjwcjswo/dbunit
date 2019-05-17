@@ -1,4 +1,4 @@
-package tester
+package dbunit
 
 import (
 	"database/sql"

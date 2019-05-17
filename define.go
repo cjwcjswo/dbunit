@@ -1,4 +1,4 @@
-package tester
+package dbunit
 
 const (
 	showColumnsQuery = "SHOW COLUMNS FROM %s"
