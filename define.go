@@ -7,7 +7,7 @@ const (
 type errCode int16
 
 const (
-	checkErrorNone     = 0
-	checkErrorNotExist = 1
-	checkErrorNotEqual = 2
+	checkErrorNone = iota
+	checkErrorNotExist
+	checkErrorNotEqual
 )

@@ -66,10 +66,12 @@ func Init(collection *FixtureCollection) {
 	initCollection(collection)
 }
 
-// Check Database Table Data
+// Compare After & Before Database Table Data
 //
 // If debug mode on, print the log regardless of the result value
-func Check() bool {
+//
+// If return value is true, After & Before data same
+func CompareAfterBefore() bool {
 	defer func() {
 		deleteAllData()
 		for _, conn := range connMap {
