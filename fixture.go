@@ -79,7 +79,7 @@ func (t TableData) compare(expected TableData) (map[int][]check, error) {
 	return result, nil
 }
 
-func (t TableData) getFormattedData(colNames []string) []row {
+func (t TableData) makeFormattedData(colNames []string) []row {
 	rowsLen := len(t)
 	colsNameLen := len(colNames)
 
@@ -106,7 +106,7 @@ func (t TableData) getFormattedData(colNames []string) []row {
 	return result
 }
 
-func (f FixtureData) getInsertQueries() []string {
+func (f FixtureData) makeInsertQueries() []string {
 	queryList := make([]string, 0, 5)
 
 	for tableName, dataSetList := range f {

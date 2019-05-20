@@ -178,7 +178,7 @@ func TestGetFormattedTableData(t *testing.T) {
 		},
 	}
 	// when
-	result := data.getFormattedData([]string{"seq", "name", "age", "country"})
+	result := data.makeFormattedData([]string{"seq", "name", "age", "country"})
 
 	// then
 	assert.Equal(t, 2, len(result))
@@ -210,7 +210,7 @@ func TestGetInsertQueryFixture(t *testing.T) {
 	}
 
 	// when
-	result := fixture.getInsertQueries()
+	result := fixture.makeInsertQueries()
 
 	// then
 	assert.Equal(t, 2, len(result))

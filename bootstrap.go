@@ -66,12 +66,12 @@ func Init(collection *FixtureCollection) {
 	initCollection(collection)
 }
 
-// Compare After & Before Database Table Data
+// Compare Fixture 'After' Table Data to Real Database Table Data
 //
 // If debug mode on, print the log regardless of the result value
 //
-// If return value is true, After & Before data same
-func CompareAfterBefore() bool {
+// If return value is true, expected and real data same.
+func AssertTableData() bool {
 	defer func() {
 		deleteAllData()
 		for _, conn := range connMap {
@@ -116,11 +116,11 @@ func CompareAfterBefore() bool {
 
 			// Print Check Result
 			if checkMap != nil && len(checkMap) > 0 {
-				println(getCheckResult(tbName, colNames, realTbData.getFormattedData(colNames), checkMap))
+				println(getCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
 				return false
 			}
 			if debug {
-				println(getCheckResult(tbName, colNames, realTbData.getFormattedData(colNames), checkMap))
+				println(getCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
 			}
 		}
 	}
@@ -178,7 +178,7 @@ func initSql(db *sql.DB, sqlBytes []byte) {
 func initCollection(collection *FixtureCollection) {
 	for dbName, data := range *collection {
 		db := connMap[dbName].db
-		queries := data.Before().getInsertQueries()
+		queries := data.Before().makeInsertQueries()
 		for _, query := range queries {
 			_, err := db.Exec(query)
 			if err != nil {
