@@ -116,11 +116,11 @@ func AssertTableData() bool {
 
 			// Print Check Result
 			if checkMap != nil && len(checkMap) > 0 {
-				println(getCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
+				println(makeCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
 				return false
 			}
 			if debug {
-				println(getCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
+				println(makeCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
 			}
 		}
 	}

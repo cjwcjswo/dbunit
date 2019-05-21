@@ -11,7 +11,7 @@ func TestGettableLineWord(t *testing.T) {
 
 	// when
 	for i := 1; i <= 5; i++ {
-		result[i-1] = gettableLineWord(i)
+		result[i-1] = makeTableLineWord(i)
 	}
 
 	// then
@@ -25,12 +25,12 @@ func TestGetTableColumnWord(t *testing.T) {
 	// given
 
 	// when
-	println(getTableColumnWord(11, false))
-	println(getTableColumnWord(11, true))
-	println(getTableColumnWord("odd", false))
-	println(getTableColumnWord("odd", true))
-	println(getTableColumnWord([]byte("even"), false))
-	println(getTableColumnWord([]byte("even"), true))
+	println(makeTableColumnWord(11, false))
+	println(makeTableColumnWord(11, true))
+	println(makeTableColumnWord("odd", false))
+	println(makeTableColumnWord("odd", true))
+	println(makeTableColumnWord([]byte("even"), false))
+	println(makeTableColumnWord([]byte("even"), true))
 
 	// then
 }

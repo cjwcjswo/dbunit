@@ -17,14 +17,14 @@ const (
 
 type row = []interface{}
 
-func getCheckResult(tableName string, colNames []string, rowDataList []row, checkMap map[int][]check) string {
+func makeCheckResult(tableName string, colNames []string, rowDataList []row, checkMap map[int][]check) string {
 	var buf bytes.Buffer
 	colNamesLen := len(colNames)
 	rowDataListLen := len(rowDataList)
 
 	// Write Table name
 	buf.WriteString(tableName + lineSeparator)
-	buf.WriteString(gettableLineWord(colNamesLen) + lineSeparator)
+	buf.WriteString(makeTableLineWord(colNamesLen) + lineSeparator)
 
 	// Write Columns Name
 	for idx, colName := range colNames {
@@ -32,14 +32,14 @@ func getCheckResult(tableName string, colNames []string, rowDataList []row, chec
 		if idx == colNamesLen-1 {
 			addWord = true
 		}
-		buf.WriteString(getTableColumnWord(colName, addWord))
+		buf.WriteString(makeTableColumnWord(colName, addWord))
 	}
 	buf.WriteString(lineSeparator)
 
 	for rowIdx, rowData := range rowDataList {
 		// Write row data
 		rowDataLen := len(rowData)
-		buf.WriteString(gettableLineWord(rowDataLen) + lineSeparator)
+		buf.WriteString(makeTableLineWord(rowDataLen) + lineSeparator)
 		idx := 0
 		for colIdx, value := range rowData {
 			addWord := false
@@ -51,13 +51,13 @@ func getCheckResult(tableName string, colNames []string, rowDataList []row, chec
 			if checkList, e := checkMap[rowIdx]; e {
 				value = addCheckErrorToValue(value, colNames[colIdx], checkList)
 			}
-			buf.WriteString(getTableColumnWord(value, addWord))
+			buf.WriteString(makeTableColumnWord(value, addWord))
 		}
 		buf.WriteString(lineSeparator)
 
 		// If row data is end, write table line
 		if rowIdx == rowDataListLen-1 {
-			buf.WriteString(gettableLineWord(rowDataLen) + lineSeparator)
+			buf.WriteString(makeTableLineWord(rowDataLen) + lineSeparator)
 		}
 	}
 
@@ -76,7 +76,7 @@ func addCheckErrorToValue(value interface{}, columnName string, checkList []chec
 	return result
 }
 
-func getTableColumnWord(value interface{}, isAddEndWord bool) string {
+func makeTableColumnWord(value interface{}, isAddEndWord bool) string {
 	colName := interfaceToString(value)
 
 	// Calculate text center align
@@ -93,6 +93,6 @@ func getTableColumnWord(value interface{}, isAddEndWord bool) string {
 	return fmt.Sprintf("%s%s%s%s%s", tableSpaceWord, strings.Repeat(blank, emptyNum/2), colName, strings.Repeat(blank, emptyNum/2)+addWord, endWord)
 }
 
-func gettableLineWord(columnNum int) string {
+func makeTableLineWord(columnNum int) string {
 	return strings.Repeat(strings.Repeat(tableLineWord, tableLineWordNumPerColumn), columnNum)
 }
