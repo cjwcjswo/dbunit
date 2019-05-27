@@ -1,5 +1,5 @@
 # Golang Database Testing tool
-[[![GoDoc](https://godoc.org/github.com/cjwcjswo/dbunit?status.svg)](https://godoc.org/github.com/cjwcjswo/dbunit) [![Go Report Card](https://goreportcard.com/badge/github.com/cjwcjswo/dbunit)](https://goreportcard.com/report/github.com/cjwcjswo/dbunit)
+[![GoDoc](https://godoc.org/github.com/cjwcjswo/dbunit?status.svg)](https://godoc.org/github.com/cjwcjswo/dbunit) [![Go Report Card](https://goreportcard.com/badge/github.com/cjwcjswo/dbunit)](https://goreportcard.com/report/github.com/cjwcjswo/dbunit)
 
 ## Install 
 
