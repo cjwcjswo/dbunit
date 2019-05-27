@@ -2,7 +2,6 @@ package dbunit
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	"strconv"
 )
@@ -59,7 +58,7 @@ func (t TableData) compare(expected TableData) (map[int][]check, error) {
 		for expectCol, expectVal := range expectRow {
 			realVal, e := realRow[expectCol]
 			if !e {
-				return nil, errors.New(fmt.Sprintf("Real Db Data Not Exists Column: %s", expectCol))
+				return nil, fmt.Errorf("Real Db Data Not Exists Column: %s", expectCol)
 			}
 
 			expectVal := interfaceToString(expectVal)
