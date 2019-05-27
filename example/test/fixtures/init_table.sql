@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS `TB_USER`;
+
+CREATE TABLE `TB_USER` (
+    `seq` INT(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(256) NOT NULL,
+    `age` INT(3) NOT NULL,
+    `country` VARCHAR(64) NOT NULL,
+    PRIMARY KEY(`seq`)
+);

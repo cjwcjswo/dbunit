@@ -3,7 +3,9 @@ package dbunit
 import (
 	"database/sql"
 	"fmt"
+	"io/ioutil"
 	"strings"
+	"testing"
 )
 
 type (
@@ -19,7 +21,7 @@ type DbConfig struct {
 	Password   string
 	Name       DbName
 
-	SqlBytes []byte
+	SqlPaths []string
 }
 
 var (
@@ -71,7 +73,7 @@ func Init(collection *FixtureCollection) {
 // If debug mode on, print the log regardless of the result value
 //
 // If return value is true, expected and real data same.
-func AssertTableData() bool {
+func AssertTableData(t *testing.T) {
 	defer func() {
 		deleteAllData()
 		for _, conn := range connMap {
@@ -117,15 +119,13 @@ func AssertTableData() bool {
 			// Print Check Result
 			if checkMap != nil && len(checkMap) > 0 {
 				println(makeCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
-				return false
+				t.Fail()
 			}
 			if debug {
 				println(makeCheckResult(tbName, colNames, realTbData.makeFormattedData(colNames), checkMap))
 			}
 		}
 	}
-
-	return true
 }
 
 func deleteAllData() {
@@ -154,23 +154,29 @@ func connect(collection *FixtureCollection) {
 		}
 
 		// if byte stream set, init database
-		if len(config.SqlBytes) > 0 {
-			initSql(connMap[dbName].db, config.SqlBytes)
+		if len(config.SqlPaths) > 0 {
+			initSql(connMap[dbName].db, config.SqlPaths)
 		}
 	}
 }
 
-func initSql(db *sql.DB, sqlBytes []byte) {
-	queries := strings.Split(string(sqlBytes), ";")
-	for _, query := range queries {
-		// if query is empty
-		if len(strings.TrimSpace(query)) < 1 {
-			continue
-		}
-
-		_, err := db.Exec(query)
+func initSql(db *sql.DB, sqlPaths []string) {
+	for _, path := range sqlPaths {
+		bytes, err := ioutil.ReadFile(path)
 		if err != nil {
 			panic(err.Error())
+		}
+		queries := strings.Split(string(bytes), ";")
+		for _, query := range queries {
+			// if query is empty
+			if len(strings.TrimSpace(query)) < 1 {
+				continue
+			}
+
+			_, err := db.Exec(query)
+			if err != nil {
+				panic(err.Error())
+			}
 		}
 	}
 }
